@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/index.js" defer></script>
+    <title>ARK 2D</title>
+</head>
+<body>
+    <div id="menu-background"></div>
+    <div id="open-game-start-menu">
+        <button type="button" id="open-start-game-btn" class="large-menu-btn large-menu-btn-d yellow-outline-focus"
+            style="text-align: center;">Open Game</button>
+    </div>
+    <div id="start-game-menu">
+        <button type="button" id="start-game-btn" class="large-menu-btn large-menu-btn-d yellow-outline-focus"
+            style="text-align: center;">Start</button>
+    </div>
+    <div id="join-ark-menu">
+        <div style="padding: 27px 0px; width: 100%;">
+            <p style="font-size: 13px;" class="gray-text">The Official server network has been retired,
+                unofficial and PostShutdown servers will continue to be available. We <span class="green-text">won't</span> see you in ARK: Survival Ascended!
+            </p>
+        </div>
+        <div class="hexa-container flex-col" style="width: 100%; height: 100%; padding: 10px 22px 22px 22px; justify-content: space-between;">
+            <div class="sp-btw-row">
+                <h2 class="large-allcaps-text">Session List</h2>
+                <div class="flex-row">
+                    <div>
+                        <label for="name-filter-servers" class="ark-blue-text">NAME FILTER:&nbsp;</label>
+                        <input type="text" class="input-text-1 ark-blue-text yellow-outline-focus" placeholder="Search"
+                            id="name-filter-servers">
+                    </div>
+                    <div>
+                        <label for="map-filter-servers" class="ark-blue-text">MAP:&nbsp;</label>
+                        <select class="dropdown-menu yellow-outline-focus" id="map-filter-servers">
+                            <option value="All">ALL MAPS</option>
+                            <option value="TheIsland">THE ISLAND</option>
+                            <option value="TheCenter">THE CENTER</option>
+                            <option value="Ragnarok">RAGNAROK</option>
+                            <option value="LostIsland">LOST ISLAND</option>
+                            <option value="Fjordur">FJORDUR</option>
+                            <option value="Valguero_P">VALGUERO</option>
+                            <option value="CrystalIsles">CRYSTAL ISLES</option>
+                            <option value="ScorchedEarth_P">SCORCHED EARTH</option>
+                            <option value="Aberration_P">ABERRATION</option>
+                            <option value="Extinction">EXTINCTION</option>
+                            <option value="Genesis">GENESIS</option>
+                            <option value="Gen2">GENESIS PART 2</option>
+                            <option value="PGARK">PGARK</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="gamemode-filter-servers" class="ark-blue-text">GAME MODE:&nbsp;</label>
+                        <select class="dropdown-menu yellow-outline-focus" id="gamemode-filter-servers">
+                            <option value="All">ALL MODES</option>
+                            <option value="PVP">PVP</option>
+                            <option value="PVE">PVE</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sort-filter-servers" class="ark-blue-text">SORT BY:&nbsp;</label>
+                        <select class="dropdown-menu yellow-outline-focus" id="sort-filter-servers">
+                            <option value="Name">NAME</option>
+                            <option value="Players">PLAYERS</option>
+                            <option value="Ping">PING</option>
+                            <option value="Day">DAY</option>
+                        </select>
+                    </div>
+                    <button type="button" class="ark-square-btn">
+                        <svg viewbox="0 0 64 64" style="width: 100%; height: 100%; fill: #ffffff;">
+                            <path d="M 14,12 L 20,12 L 20,20 L 14,20 M 22,12 L 52,12 L 52,20 L 22,20 M 22,22 L 46,22 L 46,30 L 22,30 M 22,32 L 40,32 L 40,40 L 22,40 M 22,42 L 34,42 L 34,50 L 22, 50">
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <hr class="hr-light">
+                <div class="join-list-header">
+                    <p style="padding: 6px 0px;" class="ark-blue-text">SESSION</p>
+                    <p style="padding: 6px 0px;" class="ark-blue-text">MAP</p>
+                    <p style="padding: 6px 0px;" class="ark-blue-text">PLAYERS</p>
+                    <p style="padding: 6px 0px;" class="ark-blue-text">PING</p>
+                    <p style="padding: 6px 0px;" class="ark-blue-text">DAY</p>
+                    <p style="padding: 6px 0px;" class="ark-blue-text">MODE</p>
+                </div>
+                <hr class="hr-light">
+            </div>
+            <div style="position: relative; flex-grow: 1;">
+                <div id="join-list-button-container">
+
+                </div>
+            </div>
+            <div style="padding-top: 32px;">
+                <div class="flex-row" style="width: 27%;">
+                    <label for="auto-fav-sessions" class="ark-blue-text">AUTO FAVORITE PLAYED SESSIONS:</label>
+                    <input type="checkbox" id="auto-fav-sessions" checked>
+                </div>
+                <div class="flex-row" style="width: 27%;">
+                    <label for="show-password-sessions" class="ark-blue-text">SHOW PASSWORD PROTECTED:</label>
+                    <input type="checkbox" id="show-password-sessions">
+                </div>
+                <div class="flex-row" style="width: 100%;">
+                    <div class="flex-row" style="gap: 24px;">
+                        <label for="session-type-filter" class="ark-blue-text">SESSION FILTER:</label>
+                        <select type="checkbox" class="dropdown-menu yellow-outline-focus" id="session-type-filter">
+                            <option value="off_dedicated">OFFICIAL DEDICATED ARKS</option>
+                            <option value="pc_unofficial">UNOFFICIAL PC SESSIONS</option>
+                            <option value="p_dedicated">PLAYER DEDICATED ARKS</option>
+                            <option value="p_non_dedicated">NON-DEDICATED ARKS</option>
+                            <option value="favorites">FAVORITES</option>
+                            <option value="off_legacy">OFFICIAL LEGACY SERVERS</option>
+                        </select>
+                    </div>
+                    <div class="flex-row" style="gap: 8px;">
+                        <button type="button" class="ark-small-btn yellow-outline-focus" disabled>JOIN LAST PLAYED
+                            SESSION</button>
+                        <button type="button" class="ark-small-btn yellow-outline-focus" disabled>JOIN</button>
+                        <button type="button" class="ark-small-btn yellow-outline-focus" id="refresh-server-list">REFRESH</button>
+                        <button type="button" class="ark-small-btn yellow-outline-focus" disabled>ADD TO FAVORITES</button>
+                        <button type="button" class="ark-small-btn yellow-outline-focus"
+                            id="close-join-ark-menu">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="host-ark-menu" style="gap: 16px;">
+        <div class="hexa-container" style="width: 35%;">
+            
+        </div>
+        <div class="hexa-container" style="flex-grow: 1; padding: 16px 32px;">
+            <div class="flex-row">
+                <h2 class="large-allcaps-text">Ark</h2>
+                <div>
+                    <button type="button" class="yellow-outline-focus">CPD</button>
+                    <button type="button" class="yellow-outline-focus">CSD</button>
+                </div>
+            </div>
+            <hr class="hr-light">
+            <p style="font-size: 20px; text-align: center; padding: 6px 0px;" class="ark-blue-text">STORY ARKS</p>
+            <hr class="hr-light">
+            <div class="ark-map-select-container">
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">THE ISLAND</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">GENESIS: PART 1</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">GENESIS: PART 2</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">SCORCHED EARTH</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">ABERRATION</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">EXTINCTION</button>
+            </div>
+            <hr class="hr-light">
+            <p style="font-size: 20px; text-align: center; padding: 6px 0px;" class="ark-blue-text">CUSTOM ARKS</p>
+            <hr class="hr-light">
+            <div class="ark-map-select-container">
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">FJORDUR</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">LOST ISLAND</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">THE CENTER</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">RAGNAROK</button>  
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">VALGUERO</button>
+                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">CRYSTAL ISLES</button>
+            </div>
+            <button type="button" id="play-host-ark-btn" class="ark-small-btn yellow-outline-focus" style="width: 100%;">HOST NON-DEDICATED SESSION</button>
+            <button type="button" id="close-host-ark-menu" class="yellow-outline-focus">CANCEL</button>
+        </div>
+        <div class="hexa-container" style="width: 35%;">
+
+        </div>
+    </div>
+    <div id="main-menu">
+        <!-- <div class="mm-fade-in"></div> -->
+        <div class="main-menu-l">
+            <div class="basic-container">
+                <img src="https://placehold.co/256x256">
+            </div>
+            <div class="v-flex-list" style="align-items: start;">
+                <div class="basic-container">
+                    <!-- <img src="assets/tsotf_logo.png" width="160"> -->
+                </div>
+                <button type="button" id="open-tsotf-game-menu"
+                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Play TSOTF</button>
+                <button type="button" id="open-join-game-menu"
+                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Join Ark</button>
+                <button type="button" id="open-host-ark-menu"
+                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Host &bsol; Local</button>
+                <button type="button" id="open-options-menu"
+                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Options</button>
+                <button type="button" id="open-survival-guide"
+                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Survival Guide</button>
+                <button type="button" id="open-credits"
+                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Credits</button>
+            </div>
+            <p>SURVIVETHEARK.com<br>0.1</p>
+        </div>
+        <div class="main-menu-r">
+            <div class="hexa-container" id="ark-news">
+                <h2 class="large-allcaps-text">Ark News</h2>
+                <p class="black-border-text">Game development is still in progress! Bugs and glitches can and will
+                    occur!</p>
+                <br>
+                <p class="black-border-text pink-text">Level 3 engrams are now in game files!</p>
+
+                <!-- <p class="black-border-text red-text"> This project is now abandoned!</p> -->
+                <p class="black-border-text green-text"> This project is no longer abandoned!</p>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: end;">
+                <div style="padding-right: 12px;">
+                    <h2 class="large-allcaps-text" style="font-size: 32px; text-align: right;">Game Modes</h2>
+                </div>
+                <button type="button" class="large-menu-btn lmbtn-r yellow-outline-focus has-tooltip" style="font-size: 32px;">
+                    Survival Evolved
+                    <div class="tooltip">
+                        This is regular ARK: Survival Evolved,<br>utilizing the full set of original ARK Engrams.
+                    </div>
+                </button>
+                <button type="button" class="large-menu-btn lmbtn-r yellow-outline-focus has-tooltip" style="font-size: 32px;">
+                    Primitive Plus Official
+                    <div class="tooltip">
+                        This is a revamped ARK game mode, with an all-new <br>set of Engrams and mechanics focused on primitive-style survival. <br>Test your wits and skills to see if you can overcome the challenge of <br>conquering the ARK without the benefits of modern technology!
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <canvas id="scene"></canvas>
+</body>
+</html>
