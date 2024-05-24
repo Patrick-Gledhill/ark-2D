@@ -91,7 +91,7 @@ div {
 	bottom: 0px;
 	right: 0px;
 	display: flex;
-	padding: 50px 60px;
+	padding: 38px 45px; /* 40 48 */
 }
 
 @keyframes fade-from-black-ark-bg {
@@ -214,6 +214,10 @@ div {
 	text-align: left;
 }
 
+.lmbtn-p-g-a {
+	background: linear-gradient(to right, #a3d5e040 30%, #88e8fe20 60%, transparent);
+}
+
 .lmbtn-p-g:hover {
 	background: linear-gradient(to right, #a3d5e040 30%, #88e8fe20 60%, transparent);
 }
@@ -226,6 +230,10 @@ div {
 	padding: 8px 12px 4px 64px;
 	min-width: 332px;
 	text-align: right;
+}
+
+.lmbtn-r-a {
+	background: linear-gradient(to right, transparent, #88e8fe20, #a3d5e040);
 }
 
 .lmbtn-r:hover {
@@ -437,21 +445,24 @@ div {
 	text-shadow: 1px 1px 1px #000000bf;
 	text-align: center;
 	padding: 4px 6px;
+	pointer-events: none;
 }
 
 .has-tooltip:hover .tooltip {
 	display: block;
 	opacity: 1;
+	pointer-events: all;
 }
 
 .has-tooltip:focus .tooltip {
 	display: block;
 	opacity: 1;
+	pointer-events: all;
 }
 
 #menu-background {
-	background: url(../assets/ark_survival_evolved_logo_bg_lit.jpg);
-	/* background: #202020; */
+	/* background: url(../assets/ark_survival_evolved_logo_bg_lit.jpg); */
+	background: #202020;
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
@@ -477,7 +488,7 @@ div {
 	background: #05242ebf;
 	border: 1px solid #4a98aa80;
 	color: #338699;
-	padding: 8px;
+	padding: 8px 8px;
 }
 
 .transparent-ark-btn[data-is-selected="true"] {
@@ -487,7 +498,7 @@ div {
 }
 
 .ark-map-btn {
-	flex-grow: 1;
+	/* flex-grow: 1; */
 	height: fit-content;
 	text-align: right;
 }
@@ -495,8 +506,7 @@ div {
 .ark-map-select-container {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	max-height: 38%;
-	min-height: 10%;
+	/* height: 50%; */
 	display: flex;
 	gap: 4px;
 	flex-direction: column;
