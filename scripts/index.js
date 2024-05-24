@@ -1424,7 +1424,7 @@ window.addEventListener("mouseup", () => {
 
 var closeStartMenu = document.getElementById("start-game-btn");
 
-var playGameBtn = document.getElementById("play-host-ark-btn");
+var playGameBtn = document.getElementById("play-host-ark-non-d-btn");
 
 var openHostArkMenu = document.getElementById("open-host-ark-menu");
 var closeHostArkMenu = document.getElementById("close-host-ark-menu");
@@ -1440,7 +1440,7 @@ mainMenuMusicE.loop = true;
 
 openStartGameBtn.onclick = function () {
 	openMenu("start-game-menu");
-	// mainMenuMusicE.play();
+	mainMenuMusicE.play();
 }
 
 closeStartMenu.onclick = function () {
@@ -1495,7 +1495,7 @@ var serverBtnsData = [
 	["NA-PVP-Official-TheIsland-PostShutdown-Beginners1", "TheIsland", 83, 70, Math.round(random(16, 128)), Math.round(random(1, 128)), "PVP", "off_dedicated", false],
 	["NA-PVP-Official-Ragnarok-PostShutdown-Beginners2", "Ragnarok", 63, 70, Math.round(random(16, 128)), Math.round(random(1, 128)), "PVP", "off_dedicated", false],
 	["NA-PVP-Official-TheCenter-PostShutdown-Beginners3", "TheCenter", 43, 70, Math.round(random(16, 128)), Math.round(random(1, 128)), "PVP", "off_dedicated", false],
-	// ["Poopy Patrick is a butt, that's why! LOL! Hosted by nitrado.net", "TheIsland", 91, 70, 255, 3, "PVP", "off_dedicated", false]
+	// ["Poopy Patrick is a butt, that's why! LOL! Hosted by nitrado.net", "TheIsland", 91, 70, 255, 3, "PVP", "p_dedicated", false]
 
 
 	["NA-PVE-Official-TheIsland-PostShutdown1", "TheIsland", 9, 70, Math.round(random(8, 128)), Math.round(random(1, 128)), "PVE", "off_dedicated", false],
@@ -1570,7 +1570,87 @@ function reloadServerList(firstTime) {
 	});
 }
 
-var serverFilterAscDesc = -1;
+var serverFilterAscDesc = 1;
+
+function applyServerSortByFilter() {
+	if (serverFilterAscDesc === 1) {
+		if (serverSortByFilter.value === "Name") {
+			serverBtnsData.sort((a, b) => {
+				var repeatLength = a[0].length > b[0].length ? b[0].length : a[0].length;
+
+				var comparingIdx = 0;
+
+				for (var i = 0; i < repeatLength; i++) {
+					if (a[0].toLowerCase().charAt(comparingIdx) !== b[0].toLowerCase().charAt(comparingIdx)) {
+						break;
+					}
+
+					comparingIdx++;
+				}
+
+				return letterToNum(a[0].charAt(comparingIdx)) - letterToNum(b[0].charAt(comparingIdx));
+			});
+		} else if (serverSortByFilter.value === "Players") {
+			serverBtnsData.sort((a, b) => {
+				return b[2] - a[2];
+			});
+		} else if (serverSortByFilter.value === "Ping") {
+			serverBtnsData.sort((a, b) => {
+				return b[4] - a[4];
+			});
+		} else if (serverSortByFilter.value === "Day") {
+			serverBtnsData.sort((a, b) => {
+				return b[5] - a[5];
+			});
+		}
+
+		reloadServerList();
+	} else {
+		if (serverSortByFilter.value === "Name") {
+			serverBtnsData.sort((a, b) => {
+				var repeatLength = a[0].length > b[0].length ? b[0].length : a[0].length;
+
+				var comparingIdx = 0;
+
+				for (var i = 0; i < repeatLength; i++) {
+					if (a[0].toLowerCase().charAt(comparingIdx) !== b[0].toLowerCase().charAt(comparingIdx)) {
+						break;
+					}
+
+					comparingIdx++;
+				}
+
+				return letterToNum(b[0].charAt(comparingIdx)) - letterToNum(a[0].charAt(comparingIdx));
+			});
+		} else if (serverSortByFilter.value === "Players") {
+			serverBtnsData.sort((a, b) => {
+				return a[2] - b[2];
+			});
+		} else if (serverSortByFilter.value === "Ping") {
+			serverBtnsData.sort((a, b) => {
+				return a[4] - b[4];
+			});
+		} else if (serverSortByFilter.value === "Day") {
+			serverBtnsData.sort((a, b) => {
+				return a[5] - b[5];
+			});
+		}
+
+		reloadServerList();
+	}
+}
+
+var sortAscDescServersBtn = document.getElementById("sort-asc-desc-servers");
+
+sortAscDescServersBtn.onclick = function() {
+	if (serverFilterAscDesc === 1) {
+		serverFilterAscDesc = -1;
+	} else {
+		serverFilterAscDesc = 1;
+	}
+
+	applyServerSortByFilter();
+}
 
 sessionTypeFilter.oninput = function() {
 	reloadServerList();
@@ -1593,71 +1673,7 @@ serverGamemodeFilter.oninput = function () {
 }
 
 serverSortByFilter.oninput = function () {
-	if (serverFilterAscDesc === 1) {
-		if (this.value === "Name") {
-			serverBtnsData.sort((a, b) => {
-				var repeatLength = a[0].length > b[0].length ? b[0].length : a[0].length;
-
-				var comparingIdx = 0;
-
-				for (var i = 0; i < repeatLength; i++) {
-					if (a[0].toLowerCase().charAt(comparingIdx) !== b[0].toLowerCase().charAt(comparingIdx)) {
-						break;
-					}
-
-					comparingIdx++;
-				}
-
-				return letterToNum(a[0].charAt(comparingIdx)) - letterToNum(b[0].charAt(comparingIdx));
-			});
-		} else if (this.value === "Players") {
-			serverBtnsData.sort((a, b) => {
-				return b[2] - a[2];
-			});
-		} else if (this.value === "Ping") {
-			serverBtnsData.sort((a, b) => {
-				return b[4] - a[4];
-			});
-		} else if (this.value === "Day") {
-			serverBtnsData.sort((a, b) => {
-				return b[5] - a[5];
-			});
-		}
-
-		reloadServerList();
-	} else {
-		if (this.value === "Name") {
-			serverBtnsData.sort((a, b) => {
-				var repeatLength = a[0].length > b[0].length ? b[0].length : a[0].length;
-
-				var comparingIdx = 0;
-
-				for (var i = 0; i < repeatLength; i++) {
-					if (a[0].toLowerCase().charAt(comparingIdx) !== b[0].toLowerCase().charAt(comparingIdx)) {
-						break;
-					}
-
-					comparingIdx++;
-				}
-
-				return letterToNum(b[0].charAt(comparingIdx)) - letterToNum(a[0].charAt(comparingIdx));
-			});
-		} else if (this.value === "Players") {
-			serverBtnsData.sort((a, b) => {
-				return a[2] - b[2];
-			});
-		} else if (this.value === "Ping") {
-			serverBtnsData.sort((a, b) => {
-				return a[4] - b[4];
-			});
-		} else if (this.value === "Day") {
-			serverBtnsData.sort((a, b) => {
-				return a[5] - b[5];
-			});
-		}
-
-		reloadServerList();
-	}
+	applyServerSortByFilter();
 }
 
 var mapButtonsList = [...document.getElementsByClassName("ark-map-btn")];
