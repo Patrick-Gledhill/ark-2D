@@ -20,10 +20,12 @@
     <div id="join-ark-menu">
         <div style="padding: 27px 0px; width: 100%;">
             <p style="font-size: 13px;" class="gray-text">The Official server network has been retired,
-                unofficial and PostShutdown servers will continue to be available. We <span class="green-text">won't</span> see you in ARK: Survival Ascended!
+                unofficial and PostShutdown servers will continue to be available. We <span
+                    class="green-text">won't</span> see you in ARK: Survival Ascended!
             </p>
         </div>
-        <div class="hexa-container flex-col" style="width: 100%; height: 100%; padding: 10px 22px 22px 22px; justify-content: space-between;">
+        <div class="hexa-container flex-col"
+            style="width: 100%; height: 100%; padding: 10px 22px 22px 22px; justify-content: space-between;">
             <div class="sp-btw-row">
                 <h2 class="large-allcaps-text">Session List</h2>
                 <div class="flex-row">
@@ -68,9 +70,10 @@
                             <option value="Day">DAY</option>
                         </select>
                     </div>
-                    <button type="button" class="ark-square-btn">
-                        <svg viewbox="0 0 64 64" style="width: 100%; height: 100%; fill: #ffffff;">
-                            <path d="M 14,12 L 20,12 L 20,20 L 14,20 M 22,12 L 52,12 L 52,20 L 22,20 M 22,22 L 46,22 L 46,30 L 22,30 M 22,32 L 40,32 L 40,40 L 22,40 M 22,42 L 34,42 L 34,50 L 22, 50">
+                    <button type="button" class="ark-square-btn yellow-outline-focus" id="sort-asc-desc-servers">
+                        <svg viewbox="0 0 64 64" style="width: 100%; height: 100%; fill: #02a5ca;">
+                            <path
+                                d="M 11,12 L 13,12 L 13,47 L 11,47 M 9,47 L 15,47 L 12,50    M 15,12 L 23,12 L 23,20 L 15,20  M 15,22 L 23,22 L 23,30 L 15,30  M 15,32 L 23,32 L 23,40 L 15,40  M 15,42 L 23,42 L 23,50 L 15,50         M 25,12 L 55,12 L 55,20 L 25,20 M 25,22 L 49,22 L 49,30 L 25,30 M 25,32 L 41,32 L 41,40 L 25,40 M 25,42 L 37,42 L 37,50 L 25, 50">
                         </svg>
                     </button>
                 </div>
@@ -117,8 +120,10 @@
                         <button type="button" class="ark-small-btn yellow-outline-focus" disabled>JOIN LAST PLAYED
                             SESSION</button>
                         <button type="button" class="ark-small-btn yellow-outline-focus" disabled>JOIN</button>
-                        <button type="button" class="ark-small-btn yellow-outline-focus" id="refresh-server-list">REFRESH</button>
-                        <button type="button" class="ark-small-btn yellow-outline-focus" disabled>ADD TO FAVORITES</button>
+                        <button type="button" class="ark-small-btn yellow-outline-focus"
+                            id="refresh-server-list">REFRESH</button>
+                        <button type="button" class="ark-small-btn yellow-outline-focus" disabled>ADD TO
+                            FAVORITES</button>
                         <button type="button" class="ark-small-btn yellow-outline-focus"
                             id="close-join-ark-menu">CANCEL</button>
                     </div>
@@ -128,40 +133,79 @@
     </div>
     <div id="host-ark-menu" style="gap: 16px;">
         <div class="hexa-container" style="width: 35%;">
-            
+
         </div>
-        <div class="hexa-container" style="flex-grow: 1; padding: 16px 32px;">
+        <div class="hexa-container v-flex-list" style="width: 30%; padding: 12px 24px;">
             <div class="flex-row">
                 <h2 class="large-allcaps-text">Ark</h2>
                 <div>
-                    <button type="button" class="yellow-outline-focus">CPD</button>
-                    <button type="button" class="yellow-outline-focus">CSD</button>
+                    <button type="button" class="ark-square-btn yellow-outline-focus">
+                        <!-- <svg viewbox="0 0 64 64" style="width: 100%; height: 100%; fill: #ffffff;">
+                            <path
+                                d="M 14,12 L 20,12 L 20,20 L 14,20 M 22,12 L 52,12 L 52,20 L 22,20 M 22,22 L 46,22 L 46,30 L 22,30 M 22,32 L 40,32 L 40,40 L 22,40 M 22,42 L 34,42 L 34,50 L 22, 50">
+                        </svg> -->
+                        CPD
+                    </button>
+                    <button type="button" class="ark-square-btn yellow-outline-focus">
+                        <!-- <svg viewbox="0 0 64 64" style="width: 100%; height: 100%; fill: #ffffff;">
+                            <path
+                                d="M 14,12 L 20,12 L 20,20 L 14,20 M 22,12 L 52,12 L 52,20 L 22,20 M 22,22 L 46,22 L 46,30 L 22,30 M 22,32 L 40,32 L 40,40 L 22,40 M 22,42 L 34,42 L 34,50 L 22, 50">
+                        </svg> -->
+                        CSD
+                    </button>
                 </div>
             </div>
-            <hr class="hr-light">
-            <p style="font-size: 20px; text-align: center; padding: 6px 0px;" class="ark-blue-text">STORY ARKS</p>
-            <hr class="hr-light">
-            <div class="ark-map-select-container">
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">THE ISLAND</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">GENESIS: PART 1</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">GENESIS: PART 2</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">SCORCHED EARTH</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">ABERRATION</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">EXTINCTION</button>
+            <div class="v-flex-list" style="flex-grow: 1; justify-content: space-between;">
+                <div class="v-flex-list" style="height: fit-content;">
+                    <hr class="hr-light">
+                    <p style="font-size: 18px; text-align: center; padding: 6px 0px;" class="ark-blue-text">STORY ARKS</p>
+                    <div class="ark-map-select-container" style="max-height: 196px;">
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">THE ISLAND</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">GENESIS: PART 1</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">GENESIS: PART 2</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">SCORCHED EARTH</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">ABERRATION</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">EXTINCTION</button>
+                    </div>
+                    <hr class="hr-light">
+                    <p style="font-size: 18px; text-align: center; padding: 6px 0px;" class="ark-blue-text">CUSTOM ARKS
+                    </p>
+                    <hr class="hr-light">
+                    <div class="ark-map-select-container" style="max-height: 160px;">
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">FJORDUR</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">LOST ISLAND</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">THE CENTER</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">RAGNAROK</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">VALGUERO</button>
+                        <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus"
+                            data-is-selected="false">CRYSTAL ISLES</button>
+                    </div>
+                </div>
+    
+                <div class="v-flex-list" style="gap: 8px;">
+                    <button type="button" id="play-single-player-btn" class="ark-small-btn yellow-outline-focus">PLAY
+                        SINGLE PLAYER</button>
+                    <button type="button" id="run-dedicated-server-btn" class="ark-small-btn yellow-outline-focus">RUN
+                        DEDICATED SERVER</button>
+                        <button type="button" id="create-procedural-ark-btn" class="ark-small-btn yellow-outline-focus">CREATE
+                            PROCEDURAL ARK</button>
+                    <button type="button" id="play-host-ark-non-d-btn" class="ark-small-btn yellow-outline-focus">HOST
+                        NON-DEDICATED SESSION</button>
+                    <button type="button" id="close-host-ark-menu"
+                        class="ark-small-btn yellow-outline-focus">CANCEL</button>
+                </div>
             </div>
-            <hr class="hr-light">
-            <p style="font-size: 20px; text-align: center; padding: 6px 0px;" class="ark-blue-text">CUSTOM ARKS</p>
-            <hr class="hr-light">
-            <div class="ark-map-select-container">
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">FJORDUR</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">LOST ISLAND</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">THE CENTER</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">RAGNAROK</button>  
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">VALGUERO</button>
-                <button type="button" class="transparent-ark-btn ark-map-btn yellow-outline-focus" data-is-selected="false">CRYSTAL ISLES</button>
-            </div>
-            <button type="button" id="play-host-ark-btn" class="ark-small-btn yellow-outline-focus" style="width: 100%;">HOST NON-DEDICATED SESSION</button>
-            <button type="button" id="close-host-ark-menu" class="yellow-outline-focus">CANCEL</button>
         </div>
         <div class="hexa-container" style="width: 35%;">
 
@@ -181,8 +225,8 @@
                     class="large-menu-btn lmbtn-p-g yellow-outline-focus">Play TSOTF</button>
                 <button type="button" id="open-join-game-menu"
                     class="large-menu-btn lmbtn-p-g yellow-outline-focus">Join Ark</button>
-                <button type="button" id="open-host-ark-menu"
-                    class="large-menu-btn lmbtn-p-g yellow-outline-focus">Host &bsol; Local</button>
+                <button type="button" id="open-host-ark-menu" class="large-menu-btn lmbtn-p-g yellow-outline-focus">Host
+                    &bsol; Local</button>
                 <button type="button" id="open-options-menu"
                     class="large-menu-btn lmbtn-p-g yellow-outline-focus">Options</button>
                 <button type="button" id="open-survival-guide"
@@ -207,16 +251,20 @@
                 <div style="padding-right: 12px;">
                     <h2 class="large-allcaps-text" style="font-size: 32px; text-align: right;">Game Modes</h2>
                 </div>
-                <button type="button" class="large-menu-btn lmbtn-r yellow-outline-focus has-tooltip" style="font-size: 32px;">
+                <button type="button" class="large-menu-btn lmbtn-r lmbtn-r-a yellow-outline-focus has-tooltip"
+                    style="font-size: 32px;">
                     Survival Evolved
                     <div class="tooltip">
                         This is regular ARK: Survival Evolved,<br>utilizing the full set of original ARK Engrams.
                     </div>
                 </button>
-                <button type="button" class="large-menu-btn lmbtn-r yellow-outline-focus has-tooltip" style="font-size: 32px;">
+                <button type="button" class="large-menu-btn lmbtn-r yellow-outline-focus has-tooltip"
+                    style="font-size: 32px;">
                     Primitive Plus Official
                     <div class="tooltip">
-                        This is a revamped ARK game mode, with an all-new <br>set of Engrams and mechanics focused on primitive-style survival. <br>Test your wits and skills to see if you can overcome the challenge of <br>conquering the ARK without the benefits of modern technology!
+                        This is a revamped ARK game mode, with an all-new <br>set of Engrams and mechanics focused on
+                        primitive-style survival. <br>Test your wits and skills to see if you can overcome the challenge
+                        of <br>conquering the ARK without the benefits of modern technology!
                     </div>
                 </button>
             </div>
