@@ -1,4 +1,3 @@
-
 // function badPRNG(seed) {
 //     return 
 // }
@@ -285,6 +284,48 @@ function pointToStaticCircleCollisionResolution(point, circle) {
 
 function pointToRectangleCollisionDetection(point, rect) {
 	if (point.x > rect.position.x && point.y > rect.position.y && rect.position.x + rect.width > point.x && rect.position.y + rect.height > point.y) {
+		return true;
+	}
+
+	return false;
+}
+
+function lineToLineCollisionDetection(lineA, lineB) {
+	var x1 = lineA.pointA.position.x;
+	var y1 = lineA.pointA.position.y;
+	var x2 = lineA.pointB.position.x;
+	var y2 = lineA.pointB.position.y;
+
+	var x3 = lineB.pointA.position.x;
+	var y3 = lineB.pointA.position.y;
+	var x4 = lineB.pointB.position.x;
+	var y4 = lineB.pointB.position.y;
+
+	var uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+	var uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+
+	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+		return true;
+	}
+	return false;
+}
+
+function lineToRectangleCollisionDetection(line, rect) {
+	if (pointToRectangleCollisionDetection(line.pointA, rect) || pointToRectangleCollisionDetection(line.pointB, rect)) {
+		return true;
+	}
+
+	var r1 = { pointA: { position: new Vec2(rect.position.x, rect.position.y) }, pointB: { position: new Vec2(rect.position.x, rect.position.y + rect.height) }};
+	var r2 = { pointA: { position: new Vec2(rect.position.x + rect.width, rect.position.y) }, pointB: { position: new Vec2(rect.position.x + rect.width, rect.position.y + rect.height) }};
+	var r3 = { pointA: { position: new Vec2(rect.position.x, rect.position.y) }, pointB: { position: new Vec2(rect.position.x + rect.width, rect.position.y) }};
+	var r4 = { pointA: { position: new Vec2(rect.position.x, rect.position.y + rect.height) }, pointB: { position: new Vec2(rect.position.x + rect.width, rect.position.y + rect.height) }};
+
+	var left = lineToLineCollisionDetection(line, r1);
+	var right = lineToLineCollisionDetection(line, r2);
+	var top = lineToLineCollisionDetection(line, r3);
+	var bottom = lineToLineCollisionDetection(line, r4);
+
+	if (left || right || top || bottom) {
 		return true;
 	}
 
@@ -654,6 +695,18 @@ class StaticLineCollider {
 		this.pointA = pointA;
 		this.pointB = pointB;
 	}
+
+	get center() {
+		return lerpVec2(this.pointA.position, this.pointB.position, 0.5);
+	}
+
+	get slope() {
+		return (this.pointB.position.y - this.pointA.position.y) / (this.pointB.position.x - this.pointA.position.x);
+	}
+
+	collide(object) {
+		return lineToRectangleCollisionDetection(this, object);
+	}
 }
 
 class DeathBarrier extends StaticBoxCollider {
@@ -707,6 +760,12 @@ class FluidBox extends StaticBoxCollider {
 	}
 }
 
+class GenericPoint {
+	constructor(x, y) {
+		this.position = new Vec2(x, y);
+	}
+}
+
 class TerrainGenerator {
 	constructor(originX, originY, numPoints, maxPointHeightVariance, width, minHeight, maxHeight, seaLevel) {
 		this.origin = new Vec2(originX, originY);
@@ -729,37 +788,41 @@ class TerrainGenerator {
 			return;
 		}
 
-		var lastPointHeight = 0;
+		// var lastPointHeight = 0;
 
 		for (var i = 0; i < this.numPoints; i++) {
 			var newPointX = (this.width * (i / (this.numPoints - 1))) - this.width / 2;
 
 			// var result = perlinNoise2D(newPointX, 0);
-			var newPointX = (this.width * (i / (this.numPoints - 1))) - this.width / 2;
-			var newPointY = this.seaLevel + (lastPointHeight + this.maxPointHeightVariance * (random(-1, 1)));
+			// var newPointX = (this.width * (i / (this.numPoints - 1))) - this.width / 2;
+			// var newPointY = this.seaLevel + (lastPointHeight + this.maxPointHeightVariance * (random(-1, 1)));
 
-			var newPoint = new Vec2(newPointX, newPointY);
+			var newPointY = this.seaLevel;
 
-			if (newPoint.y > this.maxHeight) {
-				newPoint.y = this.maxHeight;
+			newPointY += noise.perlin2FBM(newPointX * 0.001, 0, 8, 0.5, 1, 2) * (this.height / 2);
+
+			var newPoint = new GenericPoint(newPointX, newPointY);
+
+			if (newPoint.position.y > this.maxHeight) {
+				newPoint.position.y = this.maxHeight;
 			}
 
-			if (newPoint.y < this.minHeight) {
-				newPoint.y = this.minHeight;
+			if (newPoint.position.y < this.minHeight) {
+				newPoint.position.y = this.minHeight;
 			}
 
-			lastPointHeight = newPoint.y;
+			// lastPointHeight = newPoint.y;
 
-			newPoint.plusEquals(this.origin);
+			newPoint.position.plusEquals(this.origin);
 
 			this.terrainPoints.push(newPoint);
 		}
 
 		for (var i = 0; i < this.terrainPoints.length - 1; i++) {
-			var centerY = lerp(this.terrainPoints[i].y, this.terrainPoints[i + 1].y, 0.5);
+			// var centerY = lerp(this.terrainPoints[i].y, this.terrainPoints[i + 1].y, 0.5);
 
-			this.terrainPoints[i].y = lerp(this.terrainPoints[i].y, centerY, 0.8);
-			this.terrainPoints[i + 1].y = lerp(this.terrainPoints[i + 1].y, centerY, 0.2);
+			// this.terrainPoints[i].y = lerp(this.terrainPoints[i].y, centerY, 0.8);
+			// this.terrainPoints[i + 1].y = lerp(this.terrainPoints[i + 1].y, centerY, 0.2);
 
 			this.terrainLines.push(new StaticLineCollider(this.terrainPoints[i], this.terrainPoints[i + 1]));
 		}
@@ -773,9 +836,9 @@ class TerrainGenerator {
 			context.beginPath();
 			for (var i = 0; i < this.terrainPoints.length; i++) {
 				if (i === 0) {
-					context.moveTo(this.terrainPoints[i].x, this.terrainPoints[i].y);
+					context.moveTo(this.terrainPoints[i].position.x, this.terrainPoints[i].position.y);
 				} else {
-					context.lineTo(this.terrainPoints[i].x, this.terrainPoints[i].y);
+					context.lineTo(this.terrainPoints[i].position.x, this.terrainPoints[i].position.y);
 				}
 			}
 			context.stroke();
@@ -822,10 +885,10 @@ class PointLight {
 	}
 }
 
-var testTerrain = new TerrainGenerator(0, 0, 256, 32, 4096, -512, 512, 0);
+var testTerrain = new TerrainGenerator(0, 0, 65, 32, 4096, -512, 512, 0);
 testTerrain.generate();
 
-var gravity = 0.3;
+var gravity = 0.35;
 var objectFriction = 0.7;
 var airFriction = 0.99;
 var gravityDir = new Vec2(0, 1).normalized();
@@ -1061,6 +1124,7 @@ class Player {
 		this.prevPos = this.position.add(0);
 		for (var c = 0; c < collisionSubsteps; c++) {
 			this.position.plusEquals(this.velocity.divide(collisionSubsteps));
+		// this.position.plusEquals(this.velocity);
 			for (var i = 0; i < staticObjects.length; i++) {
 				var object = staticObjects[i];
 
@@ -1071,8 +1135,8 @@ class Player {
 						if (col === "t") {
 							this.grounded = true;
 
-							if (this.velocity.y > 10) {
-								this.stats.health -= this.velocity.y;
+							if (this.velocity.y > 13) {
+								this.stats.health -= (this.velocity.y - 8) * 4.5;
 								this.stats.health -= this.velocity.x / 4;
 							}
 
@@ -1080,6 +1144,43 @@ class Player {
 							this.velocity.x *= objectFriction;
 						}
 					} else if (object instanceof FluidBox) {
+					} else if (object instanceof StaticLineCollider) {
+						if (lineToLineCollisionDetection(object, new StaticLineCollider(new GenericPoint(this.top.x, this.top.y), new GenericPoint(this.bottom.x, this.bottom.y))) == false) {
+							continue;
+						}
+
+						this.grounded = true;
+
+						if (this.velocity.y > 13) {
+							this.stats.health -= (this.velocity.y - 8) * 4.5;
+							this.stats.health -= this.velocity.x / 4;
+						}
+
+						this.velocity.y = 0;
+						this.velocity.x *= objectFriction;
+
+						// var dir = Math.sign(this.center.y - object.center.y);
+						var dir = -1;
+
+						if (Math.abs(object.slope) <= 1.75) {
+							// while (object.collide(this) == true) {
+								this.position.y += 0.9 * dir;
+							// }
+						} else {
+							this.grounded = false;
+
+							var slopeAngle = new Vec2(1, -object.slope).direction();
+							var surfaceNormal = slopeAngle > 0 ? slopeAngle + 90 * degToRad : slopeAngle - 90 * degToRad;
+
+							this.velocity.plusEquals(new Vec2(Math.cos(surfaceNormal) * 1, Math.sin(surfaceNormal) * 1));
+						}
+
+
+						var lineLengthX = Math.abs(object.pointB.position.x - object.pointA.position.x);
+						var lineLengthY = Math.abs(object.pointB.position.y - object.pointA.position.y);
+						var lineT = clamp(0, 1, Math.abs(this.bottom.x - object.pointA.position.x) / lineLengthX);
+
+						this.position.y = (object.pointA.position.y + (object.slope * lineT)) - this.height;
 					}
 				}
 
@@ -1292,7 +1393,23 @@ function main() {
 			camera.viewScale = 4;
 		}
 
-		player.update([floor, water]);
+		var terrainInRange = [];
+
+		for (var i = 0; i < testTerrain.terrainLines.length; i++) {
+			var line = testTerrain.terrainLines[i];
+
+			if (lineToRectangleCollisionDetection(line, { position: player.center.subtract(new Vec2(player.width, player.height)), width: player.width * 2, height: player.height * 2 })) {
+				terrainInRange.push(line);
+			}
+		}
+
+		terrainInRange.sort((a, b) => {
+			return Math.random() - 0.5;
+		});
+
+		// floor.position.y += 10;
+
+		player.update([floor, water, ...terrainInRange]);
 		worldDaySettings.update();
 
 		mouse.x += player.position.x - player.prevPos.x;
@@ -1325,6 +1442,19 @@ function main() {
 
 	/*camera.x - (vWidth / 2) / camera.viewScale, camera.y - (vHeight / 2) / camera.viewScale, vWidth / camera.viewScale, vHeight / camera.viewScale*/
 	player.draw(ctx);
+
+	// ctx.save();
+	// ctx.lineWidth = 1;
+	// ctx.strokeStyle = "#000000";
+	// ctx.beginPath();
+	// ctx.moveTo(0, 0);
+	// ctx.lineTo(mouse.x, mouse.y);
+	// ctx.stroke();
+	// ctx.closePath();
+
+	// ctx.fillStyle = lineToRectangleCollisionDetection(new StaticLineCollider(new GenericPoint(0, 0), new GenericPoint(mouse.x, mouse.y)), new StaticBoxCollider(-64, -64, 32, 32)) ? "#ff0000" : "#00ff00";
+	// ctx.fillRect(-64, -64, 32, 32);
+	// ctx.restore();
 
 	// ctx.beginPath();
 	// ctx.moveTo(floor.position.x + floor.width / 2, floor.position.y + floor.height / 2);
@@ -1642,7 +1772,7 @@ function applyServerSortByFilter() {
 
 var sortAscDescServersBtn = document.getElementById("sort-asc-desc-servers");
 
-sortAscDescServersBtn.onclick = function() {
+sortAscDescServersBtn.onclick = function () {
 	if (serverFilterAscDesc === 1) {
 		serverFilterAscDesc = -1;
 	} else {
@@ -1652,11 +1782,11 @@ sortAscDescServersBtn.onclick = function() {
 	applyServerSortByFilter();
 }
 
-sessionTypeFilter.oninput = function() {
+sessionTypeFilter.oninput = function () {
 	reloadServerList();
 }
 
-refreshServerListBtn.onclick = function() {
+refreshServerListBtn.onclick = function () {
 	reloadServerList();
 }
 
