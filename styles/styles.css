@@ -147,6 +147,7 @@ div {
 	cursor: pointer;
 	font-family: "Ark-allcaps-font";
 	text-shadow: 0px 0px 16px #88e8fe80;
+	cursor: pointer;
 }
 
 .large-menu-btn:hover {
@@ -155,6 +156,11 @@ div {
 
 .large-menu-btn:focus {
 	background-color: #88e8fe40;
+}
+
+.large-menu-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 .yellow-outline-focus {
@@ -307,6 +313,10 @@ div {
 	font-family: roboto, Arial, Helvetica, sans-serif, system-ui;
 }
 
+.input-text-1:disabled {
+	opacity: 0.5;
+}
+
 .flex-row {
 	display: flex;
 	gap: 16px;
@@ -331,6 +341,11 @@ div {
 	color: #88e8fe;
 	padding-right: 42px;
 	outline: none;
+	cursor: pointer;
+}
+
+.dropdown-menu:disabled {
+	opacity: 0.5;
 }
 
 .join-list-header {
@@ -349,6 +364,11 @@ div {
 	color: #88e8fe;
 	padding: 2px 0px;
 	margin: 4px 0px;
+	cursor: pointer;
+}
+
+.join-list-button:disabled {
+	opacity: 0.5;
 }
 
 .join-list-button label,
@@ -382,6 +402,7 @@ div {
 	font-size: 11px;
 	text-shadow: 1px 1px 2px #00000080;
 	box-shadow: inset 0px 0px 1px #000000bf;
+	cursor: pointer;
 }
 
 .ark-small-btn:disabled {
@@ -489,6 +510,12 @@ div {
 	border: 1px solid #4a98aa80;
 	color: #338699;
 	padding: 8px 8px;
+	cursor: pointer;
+}
+
+.transparent-ark-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 .transparent-ark-btn[data-is-selected="true"] {
@@ -524,4 +551,9 @@ div {
 	color: #88e8fe;
 	width: 42px;
 	height: 42px;
+}
+
+.bg-img-element {
+	background-size: 100%;
+	background-position: center;
 }
